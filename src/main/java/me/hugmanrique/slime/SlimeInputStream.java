@@ -1,12 +1,11 @@
 package me.hugmanrique.slime;
 
 import com.github.luben.zstd.Zstd;
+import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import net.minecraft.server.v1_8_R3.NibbleArray;
 
-import java.io.DataInputStream;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.BitSet;
 
 public class SlimeInputStream extends DataInputStream {
@@ -55,7 +54,7 @@ public class SlimeInputStream extends DataInputStream {
      * and uncompressed size respectively.
      *
      * @return the uncompressed data
-     * @throws IOException if the bytes cannot be read for some reason
+     * @throws IOException if the bytes cannot be read
      * @throws IllegalArgumentException if the uncompressed length doesn't match
      */
     public byte[] readCompressed() throws IOException {
@@ -70,5 +69,21 @@ public class SlimeInputStream extends DataInputStream {
         }
 
         return data;
+    }
+
+    /**
+     * Reads and parses a block of zstd-compressed bytes as
+     * an NBT named compound tag.
+     *
+     * @return the parsed named compound tag.
+     * @throws IOException if the bytes cannot be read
+     * @see #readCompressed() for requirements
+     */
+    public NBTTagCompound readCompressedCompound() throws IOException {
+        byte[] data = readCompressed();
+
+        return NBTCompressedStreamTools.a(new DataInputStream(
+                new ByteArrayInputStream(data)));
+
     }
 }

@@ -1,12 +1,11 @@
 package me.hugmanrique.slime;
 
-import net.minecraft.server.v1_8_R3.Chunk;
-import net.minecraft.server.v1_8_R3.ChunkSection;
-import net.minecraft.server.v1_8_R3.NibbleArray;
-import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 /**
  * Represents a chunk that hasn't been loaded yet.
@@ -21,7 +20,7 @@ public class ProtoSlimeChunk {
     private static final int BLOCK_DATA_LENGTH = 2048;
     private static final int SKYLIGHT_LENGTH = 2048;
 
-    static ProtoSlimeChunk from(SlimeInputStream in, int chunkX, int chunkZ) throws IOException {
+    static ProtoSlimeChunk from(SlimeInputStream in, ChunkCoordIntPair coords) throws IOException {
         int[] heightMap = in.readIntArray(HEIGHTMAP_LENGTH);
         byte[] biomes = in.readByteArray(BIOMES_LENGTH);
 
@@ -46,6 +45,10 @@ public class ProtoSlimeChunk {
 
             NibbleArray skyLight = in.readNibbleArray(SKYLIGHT_LENGTH);
 
+            // Skip custom Hypixel data
+            int hypixelBlocksLength = in.readShort();
+            in.skipBytes(hypixelBlocksLength);
+
             section.a(blockIds);
             section.a(blockLight);
             section.b(skyLight);
@@ -54,27 +57,43 @@ public class ProtoSlimeChunk {
             sections[y] = section;
         }
 
-        return new ProtoSlimeChunk(chunkX, chunkZ, sections, biomes, heightMap);
+        return new ProtoSlimeChunk(coords, sections, biomes, heightMap);
     }
 
-    private final int x;
-    private final int z;
-
+    private final ChunkCoordIntPair coords;
     private final ChunkSection[] sections;
 
     private final byte[] biomes;
     private final int[] heightMap;
 
-    private ProtoSlimeChunk(int x, int z, ChunkSection[] sections, byte[] biomes, int[] heightMap) {
-        this.x = x;
-        this.z = z;
+    private List<NBTTagCompound> tileEntities;
+    private List<NBTTagCompound> entities;
+
+    private ProtoSlimeChunk(ChunkCoordIntPair coords, ChunkSection[] sections, byte[] biomes, int[] heightMap) {
+        this.coords = coords;
         this.sections = sections;
         this.biomes = biomes;
         this.heightMap = heightMap;
     }
 
+    public void addTileEntity(NBTTagCompound compound) {
+        if (tileEntities == null) {
+            tileEntities = new ArrayList<>();
+        }
+
+        tileEntities.add(compound);
+    }
+
+    public void addEntity(NBTTagCompound compound) {
+        if (entities == null) {
+            entities = new ArrayList<>();
+        }
+
+        entities.add(compound);
+    }
+
     public Chunk toChunk(World world) {
-        Chunk chunk = new Chunk(world, x, z);
+        Chunk chunk = new Chunk(world, coords.x, coords.z);
 
         chunk.a(heightMap);
         chunk.d(true); // TerrainPopulated
@@ -84,6 +103,13 @@ public class ProtoSlimeChunk {
         chunk.a(sections);
         chunk.a(biomes);
 
+        loadEntities(world);
+
         return chunk;
+    }
+
+    public void loadEntities(World world) {
+
+
     }
 }
