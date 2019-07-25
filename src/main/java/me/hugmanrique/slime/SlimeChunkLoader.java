@@ -159,7 +159,14 @@ public class SlimeChunkLoader implements IChunkLoader {
         }
     }
 
-    private Chunk loadProtoChunk(World world, ChunkCoordIntPair coords) {
+    /**
+     * Converts a proto chunk into a Minecraft chunk.
+     *
+     * @param world the world
+     * @param coords the chunk coordinates
+     * @return the loaded chunk, or {@code null} if couldn't load
+     */
+    private Chunk loadChunk(World world, ChunkCoordIntPair coords) {
         ProtoSlimeChunk proto = protoChunks.remove(coords);
 
         if (proto == null) {
@@ -189,7 +196,7 @@ public class SlimeChunkLoader implements IChunkLoader {
         Chunk chunk = loadedChunks.get(coords);
 
         if (chunk == null) {
-            chunk = loadProtoChunk(world, coords);
+            chunk = loadChunk(world, coords);
         }
 
         world.timings.syncChunkLoadDataTimer.stopTiming();
