@@ -1,5 +1,7 @@
 package me.hugmanrique.slime;
 
+import net.minecraft.server.v1_8_R3.ChunkCoordIntPair;
+
 import java.io.ByteArrayInputStream;
 import java.util.BitSet;
 
@@ -42,35 +44,11 @@ public class ProtoSlimeRegion {
                 new ByteArrayInputStream(data));
     }
 
-    public int getChunkZ(int bitIndex) {
-        return bitIndex / width;
-    }
-
-    public int getChunkX(int bitIndex) {
-        return bitIndex % width;
-    }
-
-    public short getMinX() {
-        return minX;
-    }
-
-    public short getMinZ() {
-        return minZ;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getDepth() {
-        return depth;
+    public ChunkCoordIntPair getChunkCoords(int bitIndex) {
+        return new ChunkCoordIntPair(minX + bitIndex % width, minZ + bitIndex / width);
     }
 
     public BitSet getPopulated() {
         return populated;
-    }
-
-    public byte[] getData() {
-        return data;
     }
 }

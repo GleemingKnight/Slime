@@ -99,12 +99,9 @@ public class SlimeChunkLoader implements IChunkLoader {
                 return;
             }
 
-            int chunkX = region.getChunkX(i);
-            int chunkZ = region.getChunkZ(i);
+            ChunkCoordIntPair coords = region.getChunkCoords(i);
 
-            ChunkCoordIntPair coords = new ChunkCoordIntPair(chunkX, chunkZ);
             ProtoSlimeChunk chunk = ProtoSlimeChunk.from(stream, coords);
-
             protoChunks.put(coords, chunk);
         }
     }
