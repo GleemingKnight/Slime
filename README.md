@@ -16,6 +16,8 @@ This approach was taken for two reasons:
 1. Instantiating NMS `Chunk`s on startup uses much more CPU and memory than proto chunks. These only store the strictly necessary info in primitives.
 2. On the other hand, waiting for a chunk load request to read the Slime file is too slow. Instead, the file reading is performed during startup. Converting a proto chunk into a NMS `Chunk` is really cheap, since the data is already in memory.
 
+Once a chunk is loaded, it will be kept in memory until the server shuts down. Successive loads will return the cached chunk instead of performing the proto conversion.
+
 ## Limitations
 
 There's limited available information about the Slime format, so some assumptions were made. For example, the blog post doesn't detail the storage structure of multiple(?) slime files. We assumed they all fit in a single file, `<world-dir>/chunks.slime`.
@@ -31,7 +33,7 @@ This project is under heavy development and testing, so no CraftBukkit/Spigot/Pa
 
 Yes! We need to perform extensive testing before this project becomes stable. Please, feel free to fix bugs, add documentation, tests...
 
-Note you will need to compile the Spigot 1.8.8 server via [BuildTools](https://www.spigotmc.org/wiki/buildtools/) to get a copy of the `spigot` dependency. 
+Note you will need to manually run [BuildTools](https://www.spigotmc.org/wiki/buildtools/) to install Spigot 1.8.8 locally. 
 
 ## License
 
