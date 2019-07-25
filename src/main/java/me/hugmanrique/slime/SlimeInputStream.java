@@ -1,5 +1,6 @@
 package me.hugmanrique.slime;
 
+import com.github.luben.zstd.Zstd;
 import net.minecraft.server.v1_8_R3.NibbleArray;
 
 import java.io.DataInputStream;
@@ -46,5 +47,28 @@ public class SlimeInputStream extends DataInputStream {
         byte[] raw = readByteArray(byteCount);
 
         return BitSet.valueOf(raw);
+    }
+
+    /**
+     * Reads a block of zstd-compressed data. This method
+     * expects the following ints to be the compressed size,
+     * and uncompressed size respectively.
+     *
+     * @return the uncompressed data
+     * @throws IOException if the bytes cannot be read for some reason
+     * @throws IllegalArgumentException if the uncompressed length doesn't match
+     */
+    public byte[] readCompressed() throws IOException {
+        int compressedLength = readInt();
+        int uncompressedLength = readInt();
+
+        byte[] compressed = readByteArray(compressedLength);
+        byte[] data = Zstd.decompress(compressed, uncompressedLength);
+
+        if (data.length != uncompressedLength) {
+            throw new IllegalArgumentException("Uncompressed length doesn't match");
+        }
+
+        return data;
     }
 }

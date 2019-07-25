@@ -1,12 +1,10 @@
 package me.hugmanrique.slime;
 
-import net.minecraft.server.v1_8_R3.Chunk;
-import net.minecraft.server.v1_8_R3.ExceptionWorldConflict;
-import net.minecraft.server.v1_8_R3.IChunkLoader;
-import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_8_R3.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import static java.util.Objects.requireNonNull;
 
@@ -18,10 +16,14 @@ public class SlimeChunkLoader implements IChunkLoader {
     private static final byte SLIME_VERSION = 3;
 
     private final File directory;
-    private final;
+
+    private final Map<ChunkCoordIntPair, ProtoSlimeChunk> protoChunks;
+    private final Map<ChunkCoordIntPair, Chunk> loadedChunks;
 
     SlimeChunkLoader(File directory) {
         this.directory = requireNonNull(directory, "directory");
+
+
     }
 
     /*private BitSet getPopulatedChunksMask(DataInputStream in, int width, int depth) throws IOException {
