@@ -1,15 +1,13 @@
 package me.hugmanrique.slime;
 
-import com.github.luben.zstd.Zstd;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.Chunk;
+import net.minecraft.server.v1_8_R3.ExceptionWorldConflict;
+import net.minecraft.server.v1_8_R3.IChunkLoader;
+import net.minecraft.server.v1_8_R3.World;
 
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.BitSet;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 public class SlimeChunkLoader implements IChunkLoader {
@@ -20,12 +18,13 @@ public class SlimeChunkLoader implements IChunkLoader {
     private static final byte SLIME_VERSION = 3;
 
     private final File directory;
+    private final;
 
-    public SlimeChunkLoader(File directory) {
+    SlimeChunkLoader(File directory) {
         this.directory = requireNonNull(directory, "directory");
     }
 
-    private BitSet getPopulatedChunksMask(DataInputStream in, int width, int depth) throws IOException {
+    /*private BitSet getPopulatedChunksMask(DataInputStream in, int width, int depth) throws IOException {
         int maskByteCount = ((width * depth) / 8) + 1;
 
         byte[] rawPopulated = new byte[maskByteCount];
@@ -108,6 +107,7 @@ public class SlimeChunkLoader implements IChunkLoader {
                 int j1 = j >> 8 & 15;
                 int k1 = j >> 4 & 15;
                 int id = blocks[j] & 255;
+                /*
                 int blockData = data.a(i1, j1, k1);
                 int packed = id << 4 | blockData;
 
@@ -123,9 +123,9 @@ public class SlimeChunkLoader implements IChunkLoader {
 
                         packed = id << 4 | blockData;
                     }
-                }
+                }*/
 
-                blockIds[j] = (char) packed;
+                /*blockIds[j] = (char) packed;
             }
 
             section.a(blockIds);
@@ -136,9 +136,9 @@ public class SlimeChunkLoader implements IChunkLoader {
             section.recalcBlockCounts();
             sections[i] = section;
         }
-    }
+    }*/
 
-    private void loadChunks() throws IOException {
+    /*private void loadChunks() throws IOException {
         File chunksFile = new File(directory, CHUNKS_FILENAME);
 
         if (!chunksFile.exists()) {
@@ -164,6 +164,10 @@ public class SlimeChunkLoader implements IChunkLoader {
             byte[] chunkData = readCompressed(in);
             byte[] tileEntities = readCompressed(in);
 
+            ByteArrayInputStream chunkStream = new ByteArrayInputStream(chunkData);
+
+            readChunkData(new DataInputStream(chunkStream));
+
 
 
 
@@ -171,21 +175,7 @@ public class SlimeChunkLoader implements IChunkLoader {
 
 
         }
-    }
-
-
-
-
-
-
-
-
-
-
-
-    public Object[] loadChunk(World world, int chunkX, int chunkZ) throws IOException {
-
-    }
+    }*/
 
     /**
      * Load the chunk at the specified coordinates.
