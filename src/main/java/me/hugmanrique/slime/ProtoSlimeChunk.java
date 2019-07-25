@@ -103,13 +103,54 @@ public class ProtoSlimeChunk {
         chunk.a(sections);
         chunk.a(biomes);
 
-        loadEntities(world);
+        loadEntities(world, chunk);
 
         return chunk;
     }
 
-    public void loadEntities(World world) {
+    public void loadEntities(World world, Chunk chunk) {
+        // Load entities
+        world.timings.syncChunkLoadEntitiesTimer.startTiming();
 
+        for (NBTTagCompound compound : entities) {
+            Entity entity = EntityTypes.a(compound, world);
 
+            chunk.g(true);
+
+            if (entity == null) {
+                continue;
+            }
+
+            chunk.a(entity);
+
+            // Add riding entities
+            for (NBTTagCompound riding = compound; riding.hasKeyOfType("Riding", 10); riding = riding.getCompound("Riding")) {
+                Entity other = EntityTypes.a(riding.getCompound("Riding"), world);
+
+                if (other == null) {
+                    break;
+                }
+
+                chunk.a(other);
+                entity.mount(other);
+
+                entity = other;
+            }
+        }
+
+        world.timings.syncChunkLoadEntitiesTimer.stopTiming();
+
+        // Load tile entities
+        world.timings.syncChunkLoadTileEntitiesTimer.startTiming();
+
+        for (NBTTagCompound compound : tileEntities) {
+            TileEntity tileEntity = TileEntity.c(compound);
+
+            if (tileEntity != null) {
+                chunk.a(tileEntity);
+            }
+        }
+
+        world.timings.syncChunkLoadTileEntitiesTimer.stopTiming();
     }
 }
