@@ -163,13 +163,16 @@ public class SlimeChunkLoader implements IChunkLoader {
     }
 
     private Chunk loadProtoChunk(World world, ChunkCoordIntPair coords) {
-        ProtoSlimeChunk proto = protoChunks.get(coords);
+        ProtoSlimeChunk proto = protoChunks.remove(coords);
 
         if (proto == null) {
             return null;
         }
 
-        return proto.toChunk(world);
+        Chunk chunk = proto.toChunk(world);
+        loadedChunks.put(coords, chunk);
+
+        return chunk;
     }
 
     /**
@@ -196,10 +199,19 @@ public class SlimeChunkLoader implements IChunkLoader {
         return chunk;
     }
 
+    /**
+     * Writes the chunk to disk.
+     *
+     * @param world the world
+     * @param chunk the chunk to save
+     * @throws IOException if an error occurs while writing to disk
+     * @throws ExceptionWorldConflict if a world conflict occurs
+     */
     @Override
     public void a(World world, Chunk chunk) throws IOException, ExceptionWorldConflict {
         throw new UnsupportedOperationException("This loader does not support chunk saving");
     }
+
 
     @Override
     public void b(World world, Chunk chunk) throws IOException {
@@ -208,11 +220,11 @@ public class SlimeChunkLoader implements IChunkLoader {
 
     @Override
     public void a() {
-
+        // NOOP: chunkTick
     }
 
     @Override
     public void b() {
-        // Save all is a NOOP
+        // NOOP: saveExtraData
     }
 }
