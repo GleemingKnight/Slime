@@ -64,7 +64,7 @@ class SlimeFileTests {
         assertNotNull(initialChest.getList("Items", 10));
 
         // Check chunk sections
-
+        //
         // As no block data has been initialized, we must
         // be careful not to call methods that throw
         // "Accessed blocks before bootstrap" exceptions.
@@ -81,10 +81,6 @@ class SlimeFileTests {
 
         assertEquals(16, sections.length, "Chunk sections array length is correct");
         assertNull(sections[0], "First section should be non-populated");
-
-        for (int i = 0; i < sections.length; i++) {
-            System.out.println(sections[i] + " @ " + i);
-        }
 
         ChunkSection island = sections[4];
 

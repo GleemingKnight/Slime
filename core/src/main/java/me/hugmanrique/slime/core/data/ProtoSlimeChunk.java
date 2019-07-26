@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class ProtoSlimeChunk {
 
-    private static final int HEIGHTMAP_LENGTH = 256;
+    private static final int HEIGHTMAP_ENTRIES = 256;
     private static final int BIOMES_LENGTH = 256;
     private static final int SECTIONS_PER_CHUNK = 16;
     private static final int BLOCK_LIGHT_LENGTH = 2048;
@@ -25,11 +25,11 @@ public class ProtoSlimeChunk {
     public static boolean RECALC_BLOCK_COUNTS = true;
 
     public static ProtoSlimeChunk read(SlimeInputStream in, ChunkCoordIntPair coords) throws IOException {
-        int[] heightMap = in.readIntArray(HEIGHTMAP_LENGTH);
+        int[] heightMap = in.readIntArray(HEIGHTMAP_ENTRIES);
         byte[] biomes = in.readByteArray(BIOMES_LENGTH);
 
         // Read sections
-        BitSet populatedSections = in.readBitSet(SECTIONS_PER_CHUNK);
+        BitSet populatedSections = in.readBitSet(SECTIONS_PER_CHUNK / 8);
         ChunkSection[] sections = new ChunkSection[SECTIONS_PER_CHUNK];
 
         for (int y = 0; y < SECTIONS_PER_CHUNK; y++) {

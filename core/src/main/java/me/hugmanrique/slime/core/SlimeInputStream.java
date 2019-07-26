@@ -14,10 +14,10 @@ public class SlimeInputStream extends DataInputStream {
         super(in);
     }
 
-    public int[] readIntArray(final int length) throws IOException {
-        int[] arr = new int[length];
+    public int[] readIntArray(final int count) throws IOException {
+        int[] arr = new int[count];
 
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < count; i++) {
             arr[i] = readInt();
         }
 
