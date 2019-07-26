@@ -177,4 +177,20 @@ public class ProtoSlimeChunk {
 
         return chunk;
     }
+
+    public ChunkCoordIntPair getCoords() {
+        return coords;
+    }
+
+    public ChunkSection[] getSections() {
+        return sections;
+    }
+
+    public byte[] getBiomes() {
+        return biomes;
+    }
+
+    public int[] getHeightMap() {
+        return heightMap;
+    }
 }

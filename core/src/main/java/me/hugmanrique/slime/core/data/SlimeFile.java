@@ -127,7 +127,7 @@ public class SlimeFile {
 
     private ChunkCoordIntPair getChunkCoords(int bitIndex) {
         return new ChunkCoordIntPair(
-                minX + (bitIndex / width) * width + bitIndex % width, minZ + bitIndex / width);
+                bitIndex % width + minX, bitIndex / width + minZ);
     }
 
     /**
