@@ -17,10 +17,8 @@ public class ProtoSlimeChunk {
     private static final int HEIGHTMAP_ENTRIES = 256;
     private static final int BIOMES_LENGTH = 256;
     private static final int SECTIONS_PER_CHUNK = 16;
-    private static final int BLOCK_LIGHT_LENGTH = 2048;
     private static final int BLOCKS_LENGTH = 4096;
     private static final int BLOCK_DATA_LENGTH = 2048;
-    private static final int SKYLIGHT_LENGTH = 2048;
 
     public static boolean RECALC_BLOCK_COUNTS = true;
 
@@ -44,7 +42,7 @@ public class ProtoSlimeChunk {
             in.readNibbleArray(section.getEmittedLightArray());
 
             byte[] blocks = in.readByteArray(BLOCKS_LENGTH);
-            NibbleArray data = in.readNibbleArray(BLOCK_DATA_LENGTH);
+            NibbleArray data = in.readNibbleArray();
 
             char[] blockIds = section.getIdArray();
             SlimeReaderUtil.readBlockIds(blockIds, blocks, data);
