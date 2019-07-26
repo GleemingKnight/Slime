@@ -3,13 +3,13 @@ package me.hugmanrique.slime.core.tests;
 import com.google.common.collect.ImmutableSet;
 import me.hugmanrique.slime.core.data.ProtoSlimeChunk;
 import me.hugmanrique.slime.core.data.SlimeFile;
+import net.minecraft.server.v1_8_R3.ChunkSection;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Set;
 
@@ -18,6 +18,10 @@ import static org.junit.jupiter.api.Assertions.*;
 class SlimeFileTests {
 
     private static File SLIME_TEST_FILE = new File("src/test/resources/skyblock.slime");
+
+    static int getSectionBlockIndex(int x, int y, int z) {
+        return x | y << 8 | z << 4;
+    }
 
     @BeforeAll
     static void initAll() {
@@ -67,13 +71,26 @@ class SlimeFileTests {
 
         ProtoSlimeChunk mainIsland = file.getProtoChunkAt(1, -3);
 
-        for (ProtoSlimeChunk proto : file.getProtoChunks().values()) {
-            System.out.println(proto.getCoords());
-        }
-
         assertNotNull(mainIsland); // Main island
         assertNotNull(file.getProtoChunkAt(-66, 0)); // Sand island
         assertNull(file.getProtoChunkAt(-28, -28)); // Inside region, but unpopulated
         assertNull(file.getProtoChunkAt(9999, 9999)); // Outside region
+
+        // Assert block data is correct
+        ChunkSection[] sections = mainIsland.getSections();
+
+        assertEquals(16, sections.length, "Chunk sections array length is correct");
+        assertNull(sections[0], "First section should be non-populated");
+
+        for (int i = 0; i < sections.length; i++) {
+            System.out.println(sections[i] + " @ " + i);
+        }
+
+        ChunkSection island = sections[4];
+
+        assertNotNull(island, "Island section should be populated");
+
+        assertEquals(17, island.getIdArray()[getSectionBlockIndex(-1, 68, 1)], "Block should be oak log");
+        assertEquals(2, island.getIdArray()[getSectionBlockIndex(-1, 66, 0)], "Block should be grass");
     }
 }
