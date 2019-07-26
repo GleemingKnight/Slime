@@ -1,4 +1,4 @@
-package me.hugmanrique.slime;
+package me.hugmanrique.slime.core;
 
 import com.google.common.collect.ImmutableSet;
 import net.minecraft.server.v1_8_R3.*;

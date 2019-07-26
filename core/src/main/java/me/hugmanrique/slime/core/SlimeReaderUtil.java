@@ -1,4 +1,4 @@
-package me.hugmanrique.slime;
+package me.hugmanrique.slime.core;
 
 import net.minecraft.server.v1_8_R3.Block;
 import net.minecraft.server.v1_8_R3.NibbleArray;
