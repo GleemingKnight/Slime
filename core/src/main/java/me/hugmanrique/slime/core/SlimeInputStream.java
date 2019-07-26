@@ -10,6 +10,8 @@ import java.util.BitSet;
 
 public class SlimeInputStream extends DataInputStream {
 
+    private static final int NIBBLE_ARRAY_LENGTH = 2048;
+
     public SlimeInputStream(InputStream in) {
         super(in);
     }
@@ -40,6 +42,18 @@ public class SlimeInputStream extends DataInputStream {
         byte[] data = readByteArray(length);
 
         return new NibbleArray(data);
+    }
+
+    /**
+     * Writes the next {@link #NIBBLE_ARRAY_LENGTH} bytes
+     * to the specified nibble array.
+     *
+     * @param nibbleArray the nibble array to write to
+     * @return the number of read bytes
+     * @throws IOException if the bytes cannot be read
+     */
+    public int readNibbleArray(NibbleArray nibbleArray) throws IOException {
+        return read(nibbleArray.a());
     }
 
     public BitSet readBitSet(final int byteCount) throws IOException {

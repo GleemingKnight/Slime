@@ -39,23 +39,21 @@ public class ProtoSlimeChunk {
             }
 
             int yPos = y << 4;
-            ChunkSection section = new ChunkSection(yPos, true); // skylight
+            ChunkSection section = new ChunkSection(yPos, true); // skyLight
 
-            NibbleArray blockLight = in.readNibbleArray(BLOCK_LIGHT_LENGTH);
+            in.readNibbleArray(section.getEmittedLightArray());
 
             byte[] blocks = in.readByteArray(BLOCKS_LENGTH);
             NibbleArray data = in.readNibbleArray(BLOCK_DATA_LENGTH);
-            char[] blockIds = SlimeReaderUtil.getBlockIds(blocks, data);
 
-            NibbleArray skyLight = in.readNibbleArray(SKYLIGHT_LENGTH);
+            char[] blockIds = section.getIdArray();
+            SlimeReaderUtil.readBlockIds(blockIds, blocks, data);
+
+            in.readNibbleArray(section.getSkyLightArray());
 
             // Skip custom Hypixel data
             int hypixelBlocksLength = in.readShort();
             in.skipBytes(hypixelBlocksLength);
-
-            section.a(blockIds);
-            section.a(blockLight);
-            section.b(skyLight);
 
             if (RECALC_BLOCK_COUNTS) {
                 section.recalcBlockCounts();
