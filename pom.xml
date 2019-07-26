@@ -11,11 +11,13 @@
 
     <modules>
         <module>core</module>
+        <module>bukkit</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javac.target>1.8</javac.target>
+        <minecraft.version>1.8.8-R0.1-SNAPSHOT</minecraft.version>
     </properties>
 
     <scm>
@@ -23,6 +25,13 @@
         <developerConnection>scm:git:git@github.com:hugmanrique/Slime</developerConnection>
         <url>https://github.com/hugmanrique/Slime</url>
     </scm>
+
+    <repositories>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -32,9 +41,20 @@
                 <version>1.4.1-1</version>
             </dependency>
             <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>1.9.15</version>
+            </dependency>
+            <dependency>
                 <groupId>org.spigotmc</groupId>
                 <artifactId>spigot</artifactId>
-                <version>1.8.8-R0.1-SNAPSHOT</version>
+                <version>${minecraft.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.spigotmc</groupId>
+                <artifactId>spigot-api</artifactId>
+                <version>${minecraft.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -75,6 +95,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
