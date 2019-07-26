@@ -25,13 +25,20 @@ There's limited available information about the Slime format, so some assumption
 The provided [slime-tools](https://staticassets.hypixel.net/news/5d37b611d4298.slime-tools.jar) JAR contains a **saving** reference implementation, and seems to be for version 1, since it doesn't include entity information.
 This project supports both version `1` and `3` ([spec](https://pastebin.com/raw/EVCNAmkw)) of the format.
 
-## How do I use this?
+## Current status
 
-This project is under heavy development and testing, so no CraftBukkit/Spigot/Paper patches are available as of now.
+The main Slime chunk loader has been written and tested. We plan on releasing a Bukkit plugin that injects the custom `ServerNBTManager`.
 
-## Can I contribute?
+## Credits
 
-Yes! We need to perform extensive testing before this project becomes stable. Please, feel free to fix bugs, add documentation, tests...
+- The Hypixel team ([Minikloon](https://minikloon.net/blog/) in particular) for creating this world format.
+- The JUnit team for creating the [JUnit 5](https://junit.org/junit5/) testing framework.
+- The [Byte Buddy](https://bytebuddy.net/#/) project contributors for their code generation library.
+- [Noobcrew](https://www.minecraftforum.net/members/Noobcrew) for creating the [SkyBlock](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/maps/1473433-surv-skyblock) map (which we run tests against).
+
+## Contributing
+
+Contributions are more than welcome. This project hasn't been fully tested, so please feel free to fix bugs, add documentation, tests... 
 
 Note you will need to manually run [BuildTools](https://www.spigotmc.org/wiki/buildtools/) to install Spigot 1.8.8 locally. 
 
