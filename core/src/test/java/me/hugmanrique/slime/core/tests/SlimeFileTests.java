@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.util.BitSet;
 import java.util.Set;
 
-import static me.hugmanrique.slime.core.tests.BlockAssertions.assertBiome;
-import static me.hugmanrique.slime.core.tests.BlockAssertions.assertBlockEquals;
+import static me.hugmanrique.slime.core.tests.BlockAssertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SlimeFileTests {
@@ -80,6 +79,11 @@ class SlimeFileTests {
         // Check biomes
         assertBiome(13, mainIsland, 1, 15); // Ice Mountains
         assertBiome(13, mainIsland, 4, 12); // Ice Mountains
+
+        // Check heightmap
+        assertHeight(67, mainIsland, 4, 13);
+        assertHeight(67, mainIsland, 3, 12);
+        assertHeight(0, mainIsland, 2, 11); // Void
 
         // Check section data
         ChunkSection[] sections = mainIsland.getSections();

@@ -22,7 +22,7 @@ public final class SlimeReaderUtil {
      * @return the index
      */
     public static int getBlockIndex(int x, int y, int z) {
-        return x | y << 8 | z << 4;
+        return y << 8 | z << 4 | x;
     }
 
     /**

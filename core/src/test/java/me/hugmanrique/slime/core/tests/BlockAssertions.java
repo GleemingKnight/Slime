@@ -22,12 +22,21 @@ final class BlockAssertions {
         assertEquals(expectedPackedId, actualId, "Block should correct packed ID");
     }
 
-    static void assertBiome(int expectedBiome, ProtoSlimeChunk protoChunk, int sectionX, int sectionZ) {
-        byte x = (byte) sectionX;
-        byte z = (byte) sectionZ;
+    static void assertBiome(int expectedBiome, ProtoSlimeChunk protoChunk, int chunkX, int chunkZ) {
+        byte x = (byte) chunkX;
+        byte z = (byte) chunkZ;
 
-        int actual = protoChunk.getBiomes()[z << 4 | x];
+        int actualBiome = protoChunk.getBiomes()[z << 4 | x];
 
-        assertEquals(actual, expectedBiome, "Column should have correct biome ID");
+        assertEquals(expectedBiome, actualBiome, "Column should have correct biome ID");
+    }
+
+    static void assertHeight(int expectedHeight, ProtoSlimeChunk protoChunk, int chunkX, int chunkZ) {
+        byte x = (byte) chunkX;
+        byte z = (byte) chunkZ;
+
+        int actualHeight = protoChunk.getHeightMap()[z << 4 | x];
+
+        assertEquals(expectedHeight, actualHeight, "Column should have correct height");
     }
 }
