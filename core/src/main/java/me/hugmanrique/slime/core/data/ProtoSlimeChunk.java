@@ -22,6 +22,8 @@ public class ProtoSlimeChunk {
     private static final int BLOCK_DATA_LENGTH = 2048;
     private static final int SKYLIGHT_LENGTH = 2048;
 
+    public static boolean RECALC_BLOCK_COUNTS = true;
+
     public static ProtoSlimeChunk read(SlimeInputStream in, ChunkCoordIntPair coords) throws IOException {
         int[] heightMap = in.readIntArray(HEIGHTMAP_LENGTH);
         byte[] biomes = in.readByteArray(BIOMES_LENGTH);
@@ -55,7 +57,10 @@ public class ProtoSlimeChunk {
             section.a(blockLight);
             section.b(skyLight);
 
-            section.recalcBlockCounts();
+            if (RECALC_BLOCK_COUNTS) {
+                section.recalcBlockCounts();
+            }
+
             sections[y] = section;
         }
 

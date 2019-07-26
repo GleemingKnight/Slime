@@ -67,6 +67,7 @@ public class SlimeFile {
             }
 
             return new SlimeFile(
+                version,
                 minX,
                 minZ,
                 width,
@@ -78,6 +79,8 @@ public class SlimeFile {
             );
         }
     }
+
+    private final int version;
 
     /**
      * Lowest chunk x-coordinate
@@ -107,7 +110,8 @@ public class SlimeFile {
 
     private Map<ChunkCoordIntPair, ProtoSlimeChunk> protoChunks;
 
-    private SlimeFile(short minX, short minZ, int width, int depth, BitSet populatedChunks, byte[] chunkData, NBTTagList entities, NBTTagList tileEntities) throws IOException {
+    private SlimeFile(int version, short minX, short minZ, int width, int depth, BitSet populatedChunks, byte[] chunkData, NBTTagList entities, NBTTagList tileEntities) throws IOException {
+        this.version = version;
         this.minX = minX;
         this.minZ = minZ;
         this.width = width;
@@ -191,5 +195,41 @@ public class SlimeFile {
 
     public Map<ChunkCoordIntPair, ProtoSlimeChunk> getProtoChunks() {
         return protoChunks;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public short getMinX() {
+        return minX;
+    }
+
+    public short getMinZ() {
+        return minZ;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public BitSet getPopulatedChunks() {
+        return populatedChunks;
+    }
+
+    public byte[] getChunkData() {
+        return chunkData;
+    }
+
+    public NBTTagList getEntities() {
+        return entities;
+    }
+
+    public NBTTagList getTileEntities() {
+        return tileEntities;
     }
 }
