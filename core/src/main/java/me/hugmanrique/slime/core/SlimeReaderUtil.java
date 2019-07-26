@@ -24,13 +24,12 @@ public final class SlimeReaderUtil {
         char[] blockIds = new char[blocks.length];
 
         for (int i = 0; i < blockIds.length; i++) {
-            // TODO Figure out what each value does
-            int i1 = i & 0xF;
-            int j1 = i >> 8 & 0xF;
-            int k1 = i >> 4 & 0xF;
+            int x = i & 0xF;
+            int y = i >> 8 & 0xF;
+            int z = i >> 4 & 0xF;
 
             int id = blocks[i] & 0xFF;
-            int blockData = data.a(i1, j1, k1);
+            int blockData = data.a(x, y, z);
 
             int packed = id << 4 | blockData;
 

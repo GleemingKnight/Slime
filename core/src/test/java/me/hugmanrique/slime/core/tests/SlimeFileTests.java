@@ -19,8 +19,8 @@ class SlimeFileTests {
 
     private static File SLIME_TEST_FILE = new File("src/test/resources/skyblock.slime");
 
-    static int getSectionBlockIndex(int x, int y, int z) {
-        return x | y << 8 | z << 4;
+    static int getBlockIndex(int sectionX, int sectionY, int sectionZ) {
+        return sectionX | sectionY << 8 | sectionZ << 4;
     }
 
     @BeforeAll
@@ -86,7 +86,22 @@ class SlimeFileTests {
 
         assertNotNull(island, "Island section should be populated");
 
-        assertEquals(17, island.getIdArray()[getSectionBlockIndex(-1, 68, 1)], "Block should be oak log");
-        assertEquals(2, island.getIdArray()[getSectionBlockIndex(-1, 66, 0)], "Block should be grass");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < island.getIdArray().length; i++) {
+            if (island.getIdArray()[i] != 0) {
+                builder.append((int) island.getIdArray()[i]).append(", ");
+            }
+        }
+
+
+        System.out.println(builder.toString());
+
+        assertEquals(17,
+                island.getIdArray()[getBlockIndex(15, 4, 1)],
+                "Block should be oak log");
+
+        assertEquals(2,
+                island.getIdArray()[getBlockIndex(0, 2, 15)],
+                "Block should be grass");
     }
 }
