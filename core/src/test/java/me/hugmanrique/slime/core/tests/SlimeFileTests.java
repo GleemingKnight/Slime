@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Set;
 
@@ -58,7 +59,21 @@ class SlimeFileTests {
         assertEquals(-3, initialChest.getInt("z"));
         assertNotNull(initialChest.getList("Items", 10));
 
-        // TODO Check some blocks
+        // Check chunk sections
 
+        // As no block data has been initialized, we must
+        // be careful not to call methods that throw
+        // "Accessed blocks before bootstrap" exceptions.
+
+        ProtoSlimeChunk mainIsland = file.getProtoChunkAt(1, -3);
+
+        for (ProtoSlimeChunk proto : file.getProtoChunks().values()) {
+            System.out.println(proto.getCoords());
+        }
+
+        assertNotNull(mainIsland); // Main island
+        assertNotNull(file.getProtoChunkAt(-66, 0)); // Sand island
+        assertNull(file.getProtoChunkAt(-28, -28)); // Inside region, but unpopulated
+        assertNull(file.getProtoChunkAt(9999, 9999)); // Outside region
     }
 }

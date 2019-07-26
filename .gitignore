@@ -19,4 +19,5 @@ hs_err_pid*
 *.ipr
 *.iws
 
+**/logs
 work/
