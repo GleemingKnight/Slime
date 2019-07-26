@@ -6,7 +6,7 @@ import net.minecraft.server.v1_8_R3.NibbleArray;
 /**
  * Provides utilities to manage data in a Slime stream.
  */
-final class SlimeReaderUtil {
+public final class SlimeReaderUtil {
 
     private SlimeReaderUtil() {
         throw new AssertionError();
@@ -20,7 +20,7 @@ final class SlimeReaderUtil {
      * @param data the block data array
      * @return the converted block IDs
      */
-    static char[] getBlockIds(final byte[] blocks, final NibbleArray data) {
+    public static char[] getBlockIds(final byte[] blocks, final NibbleArray data) {
         char[] blockIds = new char[blocks.length];
 
         for (int i = 0; i < blockIds.length; i++) {

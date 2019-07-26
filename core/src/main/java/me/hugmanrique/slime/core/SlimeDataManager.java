@@ -4,10 +4,13 @@ import net.minecraft.server.v1_8_R3.*;
 
 import java.io.File;
 
+/**
+ * A ServerNBTManager that provides {@link SlimeChunkLoader}s.
+ */
 public class SlimeDataManager extends ServerNBTManager {
 
-    public SlimeDataManager(File file, String s, boolean b) {
-        super(file, s, b);
+    public SlimeDataManager(File worldContainer, String worldName, boolean flag) {
+        super(worldContainer, worldName, flag);
     }
 
     @Override
@@ -32,7 +35,7 @@ public class SlimeDataManager extends ServerNBTManager {
     }
 
     @Override
-    public void saveWorldData(WorldData worldData, NBTTagCompound nbtTagCompound) {
+    public void saveWorldData(WorldData worldData, NBTTagCompound nbtData) {
         // Don't save world
     }
 }

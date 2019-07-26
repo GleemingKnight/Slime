@@ -1,5 +1,7 @@
-package me.hugmanrique.slime.core;
+package me.hugmanrique.slime.core.data;
 
+import me.hugmanrique.slime.core.SlimeInputStream;
+import me.hugmanrique.slime.core.SlimeReaderUtil;
 import net.minecraft.server.v1_8_R3.*;
 
 import java.io.IOException;
@@ -20,7 +22,7 @@ public class ProtoSlimeChunk {
     private static final int BLOCK_DATA_LENGTH = 2048;
     private static final int SKYLIGHT_LENGTH = 2048;
 
-    static ProtoSlimeChunk from(SlimeInputStream in, ChunkCoordIntPair coords) throws IOException {
+    public static ProtoSlimeChunk read(SlimeInputStream in, ChunkCoordIntPair coords) throws IOException {
         int[] heightMap = in.readIntArray(HEIGHTMAP_LENGTH);
         byte[] biomes = in.readByteArray(BIOMES_LENGTH);
 
@@ -92,23 +94,14 @@ public class ProtoSlimeChunk {
         entities.add(compound);
     }
 
-    public Chunk toChunk(World world) {
-        Chunk chunk = new Chunk(world, coords.x, coords.z);
-
-        chunk.a(heightMap);
-        chunk.d(true); // TerrainPopulated
-        chunk.e(true); // LightPopulated
-        chunk.c(0); // InhabitedTime
-
-        chunk.a(sections);
-        chunk.a(biomes);
-
-        loadEntities(world, chunk);
-
-        return chunk;
-    }
-
-    public void loadEntities(World world, Chunk chunk) {
+    /**
+     * Adds the entities of this proto chunk to the specified
+     * Minecraft chunk.
+     *
+     * @param world the world the chunk is in
+     * @param chunk the chunk to add the entities to
+     */
+    private void loadEntities(World world, Chunk chunk) {
         // Load entities
         world.timings.syncChunkLoadEntitiesTimer.startTiming();
 
@@ -156,5 +149,27 @@ public class ProtoSlimeChunk {
         }
 
         world.timings.syncChunkLoadTileEntitiesTimer.stopTiming();
+    }
+
+    /**
+     * Converts this proto chunk into a Minecraft chunk.
+     *
+     * @param world the world the chunk is in
+     * @return the loaded chunk
+     */
+    public Chunk load(World world) {
+        Chunk chunk = new Chunk(world, coords.x, coords.z);
+
+        chunk.a(heightMap);
+        chunk.d(true); // TerrainPopulated
+        chunk.e(true); // LightPopulated
+        chunk.c(0); // InhabitedTime
+
+        chunk.a(sections);
+        chunk.a(biomes);
+
+        loadEntities(world, chunk);
+
+        return chunk;
     }
 }

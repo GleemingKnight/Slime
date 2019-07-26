@@ -84,6 +84,19 @@ public class SlimeInputStream extends DataInputStream {
 
         return NBTCompressedStreamTools.a(new DataInputStream(
                 new ByteArrayInputStream(data)));
+    }
 
+    /**
+     * Skips a block of zstd-compressed data.
+     *
+     * @return the number of bytes skipped
+     * @throws IOException if the bytes cannot be skipped
+     * @see #readCompressed() for requirements
+     */
+    public long skipCompressed() throws IOException {
+        int compressedLength = readInt();
+
+        // Skip uncompressed length + compressed data
+        return skip(4 + compressedLength);
     }
 }
