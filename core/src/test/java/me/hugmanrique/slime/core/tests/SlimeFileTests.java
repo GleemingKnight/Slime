@@ -86,16 +86,16 @@ class SlimeFileTests {
 
         assertNotNull(island, "Island section should be populated");
 
-        assertEquals(17,
-                island.getIdArray()[getBlockIndex(15, 4, 1)],
-                "Block should be oak log");
-
-        assertEquals(2,
-                island.getIdArray()[getBlockIndex(15, 2, 0)],
+        assertEquals(32,
+                island.getIdArray()[getBlockIndex(1, 2, 13)],
                 "Block should be grass");
 
+        assertEquals(2,
+                island.getIdArray()[getBlockIndex(2, 1, 12)],
+                "Block should be dirt");
+
         assertEquals(18,
-                island.getIdArray()[getBlockIndex(14, 6, 1)],
-                "BLock should be oak leaves");
+                island.getIdArray()[getBlockIndex(4, 3, 13)],
+                "BLock should be Chest");
     }
 }

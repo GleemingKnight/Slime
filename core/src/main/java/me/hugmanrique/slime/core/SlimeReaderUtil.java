@@ -29,59 +29,29 @@ public final class SlimeReaderUtil {
             int id = blocks[i] & 0xFF;
             int blockData = data.a(x, y, z);
 
-            int packed = id << 4 | blockData;
-
-            if (Block.d.a(packed) == null) {
-                // Convert old blocks
-                Block block = Block.getById(id);
-
-                if (block != null) {
-                    try {
-                        blockData = block.toLegacyData(block.fromLegacyData(blockData));
-                    } catch (Exception ignored) {
-                        blockData = block.toLegacyData(block.getBlockData());
-                    }
-
-                    // Recompute packed ID
-                    packed = id << 4 | blockData;
-                }
-            }
-
-            blockIds[i] = (char) packed;
+            blockIds[i] = getBlockId(id, blockData);
         }
     }
-    /*public static char[] getBlockIds(final byte[] blocks, final NibbleArray data) {
-        char[] blockIds = new char[blocks.length];
 
-        for (int i = 0; i < blockIds.length; i++) {
-            int x = i & 0xF;
-            int y = i >> 8 & 0xF;
-            int z = i >> 4 & 0xF;
+    public static char getBlockId(int id, int blockData) {
+        int packed = id << 4 | blockData;
 
-            int id = blocks[i] & 0xFF;
-            int blockData = data.a(x, y, z);
+        if (Block.d.a(packed) == null) {
+            // Convert old block
+            Block block = Block.getById(id);
 
-            int packed = id << 4 | blockData;
-
-            if (Block.d.a(packed) == null) {
-                // Convert old blocks
-                Block block = Block.getById(id);
-
-                if (block != null) {
-                    try {
-                        blockData = block.toLegacyData(block.fromLegacyData(blockData));
-                    } catch (Exception ignored) {
-                        blockData = block.toLegacyData(block.getBlockData());
-                    }
-
-                    // Recompute packed ID
-                    packed = id << 4 | blockData;
+            if (block != null) {
+                try {
+                    blockData = block.toLegacyData(block.fromLegacyData(blockData));
+                } catch (Exception ignored) {
+                    blockData = block.toLegacyData(block.getBlockData());
                 }
-            }
 
-            blockIds[i] = (char) packed;
+                // Recompute packed ID
+                packed = id << 4 | blockData;
+            }
         }
 
-        return blockIds;
-    }*/
+        return (char) packed;
+    }
 }
