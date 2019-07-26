@@ -45,7 +45,7 @@ public class ProtoSlimeRegion {
     }
 
     public ChunkCoordIntPair getChunkCoords(int bitIndex) {
-        return new ChunkCoordIntPair(minX + bitIndex % width, minZ + bitIndex / width);
+        return new ChunkCoordIntPair(minX + (bitIndex / width) * width + bitIndex % width, minZ + bitIndex / width);
     }
 
     public BitSet getPopulated() {
