@@ -112,29 +112,31 @@ public class ProtoSlimeChunk {
         // Load entities
         world.timings.syncChunkLoadEntitiesTimer.startTiming();
 
-        for (NBTTagCompound compound : entities) {
-            Entity entity = EntityTypes.a(compound, world);
+        if (entities != null) {
+            for (NBTTagCompound compound : entities) {
+                Entity entity = EntityTypes.a(compound, world);
 
-            chunk.g(true);
+                chunk.g(true);
 
-            if (entity == null) {
-                continue;
-            }
-
-            chunk.a(entity);
-
-            // Add riding entities
-            for (NBTTagCompound riding = compound; riding.hasKeyOfType("Riding", 10); riding = riding.getCompound("Riding")) {
-                Entity other = EntityTypes.a(riding.getCompound("Riding"), world);
-
-                if (other == null) {
-                    break;
+                if (entity == null) {
+                    continue;
                 }
 
-                chunk.a(other);
-                entity.mount(other);
+                chunk.a(entity);
 
-                entity = other;
+                // Add riding entities
+                for (NBTTagCompound riding = compound; riding.hasKeyOfType("Riding", 10); riding = riding.getCompound("Riding")) {
+                    Entity other = EntityTypes.a(riding.getCompound("Riding"), world);
+
+                    if (other == null) {
+                        break;
+                    }
+
+                    chunk.a(other);
+                    entity.mount(other);
+
+                    entity = other;
+                }
             }
         }
 
@@ -143,11 +145,13 @@ public class ProtoSlimeChunk {
         // Load tile entities
         world.timings.syncChunkLoadTileEntitiesTimer.startTiming();
 
-        for (NBTTagCompound compound : tileEntities) {
-            TileEntity tileEntity = TileEntity.c(compound);
+        if (tileEntities != null) {
+            for (NBTTagCompound compound : tileEntities) {
+                TileEntity tileEntity = TileEntity.c(compound);
 
-            if (tileEntity != null) {
-                chunk.a(tileEntity);
+                if (tileEntity != null) {
+                    chunk.a(tileEntity);
+                }
             }
         }
 
