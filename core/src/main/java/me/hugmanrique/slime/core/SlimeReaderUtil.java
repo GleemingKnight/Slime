@@ -13,6 +13,19 @@ public final class SlimeReaderUtil {
     }
 
     /**
+     * Gets the block array index of the block specified
+     * by the chunk section coordinates.
+     *
+     * @param x the chunk section x-coordinate
+     * @param y the chunk section y-coordinate
+     * @param z the chunk section z-coordinate
+     * @return the index
+     */
+    public static int getBlockIndex(int x, int y, int z) {
+        return x | y << 8 | z << 4;
+    }
+
+    /**
      * Converts the specified block and block data arrays to
      * internal block IDs.
      *

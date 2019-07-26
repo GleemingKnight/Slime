@@ -3,6 +3,7 @@ package me.hugmanrique.slime.core.tests;
 import com.google.common.collect.ImmutableSet;
 import me.hugmanrique.slime.core.data.ProtoSlimeChunk;
 import me.hugmanrique.slime.core.data.SlimeFile;
+import net.minecraft.server.v1_8_R3.ChunkCoordIntPair;
 import net.minecraft.server.v1_8_R3.ChunkSection;
 import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,15 +14,13 @@ import java.io.IOException;
 import java.util.BitSet;
 import java.util.Set;
 
+import static me.hugmanrique.slime.core.tests.BlockAssertions.assertBiome;
+import static me.hugmanrique.slime.core.tests.BlockAssertions.assertBlockEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SlimeFileTests {
 
     private static File SLIME_TEST_FILE = new File("src/test/resources/skyblock.slime");
-
-    static int getBlockIndex(int sectionX, int sectionY, int sectionZ) {
-        return sectionX | sectionY << 8 | sectionZ << 4;
-    }
 
     @BeforeAll
     static void initAll() {
@@ -63,7 +62,7 @@ class SlimeFileTests {
         assertEquals(-3, initialChest.getInt("z"));
         assertNotNull(initialChest.getList("Items", 10));
 
-        // Check chunk sections
+        // Check proto chunks
         //
         // As no block data has been initialized, we must
         // be careful not to call methods that throw
@@ -76,7 +75,13 @@ class SlimeFileTests {
         assertNull(file.getProtoChunkAt(-28, -28)); // Inside region, but unpopulated
         assertNull(file.getProtoChunkAt(9999, 9999)); // Outside region
 
-        // Assert block data is correct
+        assertEquals(new ChunkCoordIntPair(0, -1), mainIsland.getCoords());
+
+        // Check biomes
+        assertBiome(13, mainIsland, 1, 15); // Ice Mountains
+        assertBiome(13, mainIsland, 4, 12); // Ice Mountains
+
+        // Check section data
         ChunkSection[] sections = mainIsland.getSections();
 
         assertEquals(16, sections.length, "Chunk sections array length is correct");
@@ -85,17 +90,20 @@ class SlimeFileTests {
         ChunkSection island = sections[4];
 
         assertNotNull(island, "Island section should be populated");
+        assertEquals(4, island.getYPosition() >> 4);
 
-        assertEquals(32,
-                island.getIdArray()[getBlockIndex(1, 2, 13)],
-                "Block should be grass");
+        // Check blocks
+        assertBlockEquals(2, island, 1, 2, 13); // Grass
+        assertBlockEquals(3, island, 2, 1, 12); // Dirt
+        assertBlockEquals(54, 4, island, 4, 3, 13); // Chest (facing west)
+        assertBlockEquals(0, island, 0, 0, 0); // Air
 
-        assertEquals(2,
-                island.getIdArray()[getBlockIndex(2, 1, 12)],
-                "Block should be dirt");
+        // Check skylight
+        assertEquals(0, island.d(1, 0, 13)); // inside block
+        assertEquals(15, island.d(3, 3, 14)); // above island
 
-        assertEquals(18,
-                island.getIdArray()[getBlockIndex(4, 3, 13)],
-                "BLock should be Chest");
+        // Check block light
+        assertEquals(0, island.e(1, 0, 13)); // inside block
+        assertEquals(0, island.e(3, 3, 14)); // above island
     }
 }
