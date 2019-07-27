@@ -16,6 +16,8 @@ public class DataManagerIncercepts {
         File container = manager.getDirectory();
         File worldDir;
 
+        // TODO Gracefully fallback to default ChunkRegionLoader
+
         if (provider instanceof WorldProviderHell) {
             worldDir = new File(container, "DIM-1");
             worldDir.mkdirs();
