@@ -16,6 +16,9 @@ public class SlimePlugin extends JavaPlugin {
     }
 
     private void injectDataManagerMethods() {
+        // TODO Attempt to redefine without loading the agent;
+        // I believe CraftServer doesn't instantiate ServerNBTManager
+        // after STARTUP plugins have loaded.
         new ByteBuddy()
             .redefine(ServerNBTManager.class)
             .method(named("createChunkLoader"))
