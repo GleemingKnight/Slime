@@ -1,7 +1,6 @@
 package me.hugmanrique.slime.bukkit;
 
 import me.hugmanrique.slime.core.SlimeChunkLoader;
-import net.bytebuddy.implementation.bind.annotation.This;
 import net.minecraft.server.v1_8_R3.*;
 
 import java.io.File;
@@ -12,28 +11,33 @@ import java.io.File;
 public class DataManagerIncercepts {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static IChunkLoader interceptCreate(@This ServerNBTManager manager, WorldProvider provider) {
-        File container = manager.getDirectory();
-        File worldDir;
-
-        // TODO Gracefully fallback to default ChunkRegionLoader
+    public static IChunkLoader createChunkLoader(WorldProvider provider) {
+        File container = SlimePlugin.worldContainer; // TODO Fix, should be manager.getDirectory();
+        File worldDir = container;
 
         if (provider instanceof WorldProviderHell) {
             worldDir = new File(container, "DIM-1");
-            worldDir.mkdirs();
-
-            return new SlimeChunkLoader(worldDir);
         } else if (provider instanceof WorldProviderTheEnd) {
             worldDir = new File(container, "DIM1");
-            worldDir.mkdirs();
-
-            return new SlimeChunkLoader(worldDir);
         }
 
-        return new SlimeChunkLoader(container);
+        worldDir.mkdirs();
+
+        File chunksFile = new File(worldDir, SlimeChunkLoader.CHUNKS_FILENAME);
+
+        if (!chunksFile.exists()) {
+            // Fallback to default region loader
+            return new ChunkRegionLoader(worldDir);
+        }
+
+        return new SlimeChunkLoader(worldDir);
     }
 
-    public static void interceptSave(WorldData worldData, NBTTagCompound nbtData) {
+    public static void saveWorldData(WorldData worldData, NBTTagCompound nbtData) {
+        // NOOP: saveWorldData
+    }
+
+    public static void saveWorldData(WorldData worldData) {
         // NOOP: saveWorldData
     }
 }

@@ -16,7 +16,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class SlimeChunkLoader implements IChunkLoader {
 
-    private static final String CHUNKS_FILENAME = "chunks.slime";
+    public static final String CHUNKS_FILENAME = "chunks.slime";
 
     private final Map<ChunkCoordIntPair, ProtoSlimeChunk> protoChunks;
     private final Map<ChunkCoordIntPair, Chunk> loadedChunks;
