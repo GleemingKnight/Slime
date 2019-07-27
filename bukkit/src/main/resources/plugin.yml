@@ -1,0 +1,6 @@
+name: Slime
+version: ${project.version}
+description: ${project.description}
+author: Hugo Manrique
+main: me.hugmanrique.slime.bukkit.SlimePlugin
+load: STARTUP
