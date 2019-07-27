@@ -21,7 +21,7 @@ public class SlimeChunkLoader implements IChunkLoader {
     private final Map<ChunkCoordIntPair, ProtoSlimeChunk> protoChunks;
     private final Map<ChunkCoordIntPair, Chunk> loadedChunks;
 
-    SlimeChunkLoader(File directory) {
+    public SlimeChunkLoader(File directory) {
         requireNonNull(directory, "directory");
         File chunksFile = new File(directory, CHUNKS_FILENAME);
 

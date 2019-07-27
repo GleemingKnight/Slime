@@ -1,22 +1,19 @@
-package me.hugmanrique.slime.core;
+package me.hugmanrique.slime.bukkit;
 
+import me.hugmanrique.slime.core.SlimeChunkLoader;
+import net.bytebuddy.implementation.bind.annotation.This;
 import net.minecraft.server.v1_8_R3.*;
 
 import java.io.File;
 
 /**
- * A ServerNBTManager that provides {@link SlimeChunkLoader}s.
+ * Provides {@link ServerNBTManager} method overrides.
  */
-public class SlimeDataManager extends ServerNBTManager {
+public class DataManagerIncercepts {
 
-    public SlimeDataManager(File worldContainer, String worldName, boolean flag) {
-        super(worldContainer, worldName, flag);
-    }
-
-    @Override
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public IChunkLoader createChunkLoader(WorldProvider provider) {
-        File container = getDirectory();
+    public static IChunkLoader interceptCreate(@This ServerNBTManager manager, WorldProvider provider) {
+        File container = manager.getDirectory();
         File worldDir;
 
         if (provider instanceof WorldProviderHell) {
@@ -34,8 +31,7 @@ public class SlimeDataManager extends ServerNBTManager {
         return new SlimeChunkLoader(container);
     }
 
-    @Override
-    public void saveWorldData(WorldData worldData, NBTTagCompound nbtData) {
-        // Don't save world
+    public static void interceptSave(WorldData worldData, NBTTagCompound nbtData) {
+        // NOOP: saveWorldData
     }
 }
