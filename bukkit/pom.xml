@@ -18,6 +18,10 @@
     <description>Slime world loader injector plugin</description>
     <inceptionYear>2019</inceptionYear>
 
+    <properties>
+        <artifact.name>Slime-${project.version}</artifact.name>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>me.hugmanrique</groupId>
@@ -39,6 +43,53 @@
     </dependencies>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>shade-linux</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>target/${artifact.name}-linux-amd64.jar</outputFile>
+                            <artifactSet>
+                                <includes>
+                                    <include>me.hugmanrique:slime-core</include>
+                                    <include>net.bytebuddy:byte-buddy</include>
+                                    <include>com.github.luben:zstd-jni:*:linux_amd64</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>shade-windows</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>target/${artifact.name}-windows-amd64.jar</outputFile>
+                            <artifactSet>
+                                <includes>
+                                    <include>me.hugmanrique:slime-core</include>
+                                    <include>net.bytebuddy:byte-buddy</include>
+                                    <include>com.github.luben:zstd-jni:*:win_amd64</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <minimizeJar>true</minimizeJar>
+                </configuration>
+            </plugin>
+        </plugins>
         <resources>
             <resource>
                 <filtering>true</filtering>
