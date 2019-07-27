@@ -21,9 +21,9 @@ public class SlimeChunkLoader implements IChunkLoader {
     private final Map<ChunkCoordIntPair, ProtoSlimeChunk> protoChunks;
     private final Map<ChunkCoordIntPair, Chunk> loadedChunks;
 
-    public SlimeChunkLoader(File directory) {
-        requireNonNull(directory, "directory");
-        File chunksFile = new File(directory, CHUNKS_FILENAME);
+    public SlimeChunkLoader(File worldDir) {
+        requireNonNull(worldDir, "directory");
+        File chunksFile = new File(worldDir, CHUNKS_FILENAME);
 
         this.loadedChunks = new ConcurrentHashMap<>(); // Paper loads chunks asynchronously
 
