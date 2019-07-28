@@ -33,6 +33,11 @@
             <artifactId>byte-buddy</artifactId>
         </dependency>
         <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+            <version>1.9.15</version>
+        </dependency>
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
         </dependency>
@@ -61,6 +66,7 @@
                                 <includes>
                                     <include>me.hugmanrique:slime-core</include>
                                     <include>net.bytebuddy:byte-buddy</include>
+                                    <include>net.bytebuddy:byte-buddy-agent</include>
                                     <include>com.github.luben:zstd-jni:*:linux_amd64</include>
                                 </includes>
                             </artifactSet>
