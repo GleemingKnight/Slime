@@ -1,7 +1,6 @@
 package me.hugmanrique.slime.bukkit;
 
 import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassInjector.UsingInstrumentation.Target;
@@ -62,8 +61,6 @@ public class SlimePlugin extends JavaPlugin {
 
     private void addDataManagerIntercepts() {
         getLogger().info("Adding ServerNBTManager intercepts");
-
-        ByteBuddyAgent.install();
 
         redefine(ServerNBTManager.class, builder -> builder
                 .method(named("createChunkLoader"))
