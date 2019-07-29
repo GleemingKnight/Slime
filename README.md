@@ -4,6 +4,38 @@ Slime is a Minecraft world file format described by the [Hypixel](https://hypixe
 
 This projects provides a [CraftBukkit](https://www.spigotmc.org/) Slime chunk loader based on "in-memory" worlds, which don't use disk storage at all. This is extremely useful for minigame servers, where the maps tend to be small (they fit nicely in memory), and no world saving is needed.
 
+## Getting started
+
+You can download the Bukkit plugin from the [Releases](https://github.com/hugmanrique/Slime/releases) page.
+
+First, let's convert a region file-based world to a `.slime` file. Download the [slime-tools](https://staticassets.hypixel.net/news/5d37b611d4298.slime-tools.jar), and run the following command
+
+```bash
+java -jar <world folder> [coords] <chunk radius>
+```
+
+where `[coords]` is a comma-separated coordinate list (e.g. `0,0,0`) that represents the center of the world, and `<chunk radius>` is the side length of the square region to convert.
+
+Next, move the generated `.slime` file into your server's world directory (e.g. `world/`), and rename it to `chunks.slime` (this is really important: if your Slime file doesn't have this name, it won't get loaded).
+
+Finally, move the `Slime` plugin to the server's `plugins/` directory, and start it up.
+
+<figure>
+  <img src="https://i.hugmanrique.me/fSkXMEU.png" />
+  <figcaption>The SkyBlock Slime world <a href="blob/master/core/src/test/resources/skyblock.slime">(Download)</a></figcaption>
+</figure>
+
+The plugin will only inject the custom chunk loader into world directories that contain a `chunks.slime` file, and will fallback to the default region file-based chunk loader.
+
+Note the plugin also sets the Slime world's `ChunkGenerator` to an empty chunk generator, so all non-populated chunks will be empty.
+
+As we modify several NMS methods, there are some caveats:
+
+- World saving is not implemented. This means the changes you make to the Slime world **will be deleted** upon restart.
+- As we inject plugin classes into Java's system class loader, reloading this plugin may result in undefined behavior.
+
+The former is ideal for minigame servers since the server doesn't need to serialize the world to NBT, resulting in less CPU and memory usage.
+
 ## How does it work?
 
 We "inject" the custom chunk loader by providing a [`ServerNBTManager`](core/src/main/java/me/hugmanrique/slime/core/SlimeDataManager.java) that overrides the `createChunkLoader`. This method returns a `SlimeChunkLoader`, which is where the main program logic lies.
@@ -24,10 +56,6 @@ There's limited available information about the Slime format, so some assumption
 
 The provided [slime-tools](https://staticassets.hypixel.net/news/5d37b611d4298.slime-tools.jar) JAR contains a **saving** reference implementation, and seems to be for version 1, since it doesn't include entity information.
 This project supports both version `1` and `3` ([spec](https://pastebin.com/raw/EVCNAmkw)) of the format.
-
-## Current status
-
-The main Slime chunk loader has been written and tested. We plan on releasing a Bukkit plugin that injects the custom `ServerNBTManager`.
 
 ## Credits
 
