@@ -37,6 +37,9 @@ public class DataManagerAdvice {
                 Constructor<?> loaderConstructor = loaderClass.getConstructor(File.class);
 
                 returned = (IChunkLoader) loaderConstructor.newInstance(worldDir);
+
+                // Set empty chunk generator
+                EmptyChunkGenerator.setGenerator(manager.getUUID());
                 return;
             } catch (Exception e) {
                 e.printStackTrace();
