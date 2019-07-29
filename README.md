@@ -8,7 +8,7 @@ This projects provides a [CraftBukkit](https://www.spigotmc.org/) Slime chunk lo
 
 You can download the Bukkit plugin from the [Releases](https://github.com/hugmanrique/Slime/releases) page.
 
-First, let's convert a region file-based world to a `.slime` file. Download the [slime-tools](https://staticassets.hypixel.net/news/5d37b611d4298.slime-tools.jar), and run the following command
+First, let's convert a region file-based world to a `.slime` file. Download [slime-tools](https://staticassets.hypixel.net/news/5d37b611d4298.slime-tools.jar), and run the following command
 
 ```bash
 java -jar <world folder> [coords] <chunk radius>
@@ -16,11 +16,11 @@ java -jar <world folder> [coords] <chunk radius>
 
 where `[coords]` is a comma-separated coordinate list (e.g. `0,0,0`) that represents the center of the world, and `<chunk radius>` is the side length of the square region to convert.
 
-Next, move the generated `.slime` file into your server's world directory (e.g. `world/`), and rename it to `chunks.slime` (this is really important: if your Slime file doesn't have this name, it won't get loaded).
+Next, move the generated `.slime` file into your server's world directory (e.g. `world/`), and rename it to `chunks.slime`.
 
 Finally, move the `Slime` plugin to the server's `plugins/` directory, and start it up.
 
-<div align="center" style="margin: ">
+<br/><div align="center" style="margin: ">
   <figure>
     <img src="https://i.hugmanrique.me/fSkXMEU.png" />
     <figcaption>The SkyBlock Slime world <a href="blob/master/core/src/test/resources/skyblock.slime">(Download)</a></figcaption>
