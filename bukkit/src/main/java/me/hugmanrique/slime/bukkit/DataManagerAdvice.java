@@ -23,8 +23,9 @@ public class DataManagerAdvice {
             worldDir = new File(container, "DIM1");
         }
 
-        //noinspection ResultOfMethodCallIgnored
-        worldDir.mkdirs();
+        if (!worldDir.mkdirs()) {
+            throw new IllegalArgumentException("Cannot create " + worldDir + " directory");
+        }
 
         File chunksFile = new File(worldDir, SlimeChunkLoader.CHUNKS_FILENAME);
 
