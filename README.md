@@ -20,12 +20,12 @@ Next, move the generated `.slime` file into your server's world directory (e.g. 
 
 Finally, move the `Slime` plugin to the server's `plugins/` directory, and start it up.
 
-<div align="center">
+<div align="center" style="margin: ">
   <figure>
     <img src="https://i.hugmanrique.me/fSkXMEU.png" />
     <figcaption>The SkyBlock Slime world <a href="blob/master/core/src/test/resources/skyblock.slime">(Download)</a></figcaption>
   </figure>
-</div>
+</div><br/>
 
 The plugin will only inject the custom chunk loader into world directories that contain a `chunks.slime` file, and will fallback to the default region file-based chunk loader.
 
