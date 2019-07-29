@@ -3,10 +3,14 @@ package me.hugmanrique.slime.bukkit;
 import me.hugmanrique.slime.core.SlimeChunkLoader;
 import net.bytebuddy.asm.Advice;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
 
 public class DataManagerAdvice {
+
+    private static final String CHUNK_LOADER_CLASSNAME = "me.hugmanrique.slime.core.SlimeChunkLoader";
 
     @Advice.OnMethodExit
     public static void createChunkLoader(WorldProvider provider, @Advice.Return(readOnly = false) IChunkLoader returned, @Advice.This ServerNBTManager manager) {
@@ -22,16 +26,23 @@ public class DataManagerAdvice {
         //noinspection ResultOfMethodCallIgnored
         worldDir.mkdirs();
 
-        System.out.println("Loading Slime world " + container.getName());
-
         File chunksFile = new File(worldDir, SlimeChunkLoader.CHUNKS_FILENAME);
 
         if (chunksFile.exists()) {
-            returned = new SlimeChunkLoader(worldDir);
-        } else {
-            System.out.println("Cannot find Slime chunks file, falling back to Anvil region files");
+            ClassLoader pluginClassLoader = Bukkit.getPluginManager().getPlugin("Slime").getClass().getClassLoader();
 
-            returned = new ChunkRegionLoader(worldDir);
+            try {
+                Class<?> loaderClass = Class.forName(CHUNK_LOADER_CLASSNAME, true, pluginClassLoader);
+                Constructor<?> loaderConstructor = loaderClass.getConstructor(File.class);
+
+                returned = (IChunkLoader) loaderConstructor.newInstance(worldDir);
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
+        // Fallback to Anvil region loader
+        returned = new ChunkRegionLoader(worldDir);
     }
 }

@@ -92,7 +92,7 @@
                 </executions>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <minimizeJar>true</minimizeJar>
+                    <minimizeJar>false</minimizeJar>
                 </configuration>
             </plugin>
         </plugins>
