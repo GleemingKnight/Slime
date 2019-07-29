@@ -15,6 +15,11 @@ import java.util.Set;
 
 import static java.util.stream.Collectors.toMap;
 
+/**
+ * Injects plugin classes into a {@link ClassLoader}.
+ *
+ * @see ClassInjector
+ */
 public class PluginClassInjector {
 
     private final Set<Class<?>> classes;

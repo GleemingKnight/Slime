@@ -28,6 +28,13 @@ public class SlimePlugin extends JavaPlugin {
         addDataManagerIntercepts();
     }
 
+    /**
+     * Byte Buddy redefine builder utility.
+     *
+     * @param type the type to redefine
+     * @param operation the modified type builder
+     * @param <T> the class type
+     */
     private <T> void redefine(Class<T> type, UnaryOperator<DynamicType.Builder<T>> operation) {
         DynamicType.Builder<T> builder = new ByteBuddy().redefine(type);
         ClassLoader systemClassLoader = ServerNBTManager.class.getClassLoader();
@@ -43,8 +50,8 @@ public class SlimePlugin extends JavaPlugin {
             PluginClassInjector injector = new PluginClassInjector();
 
             injector.addClass(EmptyChunkGenerator.class);
-
             injector.inject(Target.SYSTEM);
+
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,17 +70,5 @@ public class SlimePlugin extends JavaPlugin {
                     .intercept(Advice.to(DataManagerAdvice.class).wrap(StubMethod.INSTANCE))
                 .method(named("saveWorldData").and(takesArguments(2)))
                     .intercept(StubMethod.INSTANCE));
-
-        /*ClassLoader systemClassLoader = ServerNBTManager.class.getClassLoader();
-
-        new ByteBuddy()
-                .redefine(ServerNBTManager.class)
-                .method(named("createChunkLoader"))
-                    .intercept(Advice.to(DataManagerAdvice.class)
-                        .wrap(StubMethod.INSTANCE))
-                .method(named("saveWorldData").and(takesArguments(2)))
-                    .intercept(StubMethod.INSTANCE)
-                .make()
-                .load(systemClassLoader, ClassReloadingStrategy.fromInstalledAgent());*/
     }
 }
