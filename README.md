@@ -11,7 +11,7 @@ You can download the Bukkit plugin from the [Releases](https://github.com/hugman
 First, let's convert a region file-based world to a `.slime` file. Download [slime-tools](https://staticassets.hypixel.net/news/5d37b611d4298.slime-tools.jar), and run the following command
 
 ```bash
-java -jar <world folder> [coords] <chunk radius>
+java -jar slime-tools.jar <world folder> [coords] <chunk radius>
 ```
 
 where `[coords]` is a comma-separated coordinate list (e.g. `0,0,0`) that represents the center of the world, and `<chunk radius>` is the side length of the square region to convert.
