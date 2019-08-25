@@ -47,7 +47,7 @@ public class SlimeFile {
             int width = in.readShort();
             int depth = in.readShort();
 
-            int bitSetLength = (int) Math.ceil((width * depth) / 8);
+            int bitSetLength = (int) Math.ceil((width * depth) / 8D);
             BitSet populatedChunks = in.readBitSet(bitSetLength);
 
             byte[] chunkData = in.readCompressed();
