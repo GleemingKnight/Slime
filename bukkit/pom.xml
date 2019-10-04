@@ -28,6 +28,7 @@
             <artifactId>slime-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <!-- Remember shaded dependencies must be included in shade includes -->
         <dependency>
             <groupId>net.bytebuddy</groupId>
             <artifactId>byte-buddy</artifactId>
@@ -84,6 +85,7 @@
                                 <includes>
                                     <include>me.hugmanrique:slime-core</include>
                                     <include>net.bytebuddy:byte-buddy</include>
+                                    <include>net.bytebuddy:byte-buddy-agent</include>
                                     <include>com.github.luben:zstd-jni:*:win_amd64</include>
                                 </includes>
                             </artifactSet>
