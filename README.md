@@ -23,7 +23,7 @@ Finally, move the `Slime` plugin to the server's `plugins/` directory, and start
 <br/><div align="center" style="margin: ">
   <figure>
     <img src="https://i.hugmanrique.me/fSkXMEU.png" />
-    <figcaption>The SkyBlock Slime world <a href="blob/master/core/src/test/resources/skyblock.slime">(Download)</a></figcaption>
+    <figcaption>The SkyBlock Slime world <a href="core/src/test/resources/skyblock.slime">(Download)</a></figcaption>
   </figure>
 </div><br/>
 
