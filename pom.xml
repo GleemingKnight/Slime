@@ -18,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javac.target>1.8</javac.target>
         <minecraft.version>1.8.8-R0.1-SNAPSHOT</minecraft.version>
-        <zstd.version>1.4.1-1</zstd.version>
+        <zstd.version>1.4.4-7</zstd.version>
     </properties>
 
     <scm>
