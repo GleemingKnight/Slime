@@ -104,7 +104,7 @@
                                     <include>me.hugmanrique:slime-core</include>
                                     <include>net.bytebuddy:byte-buddy</include>
                                     <include>net.bytebuddy:byte-buddy-agent</include>
-                                    <include>com.github.luben:zstd-jni:*:darwin-x86_64</include>
+                                    <include>com.github.luben:zstd-jni:*:darwin_x86_64</include>
                                 </includes>
                             </artifactSet>
                         </configuration>

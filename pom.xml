@@ -52,7 +52,7 @@
                 <groupId>com.github.luben</groupId>
                 <artifactId>zstd-jni</artifactId>
                 <version>${zstd.version}</version>
-                <classifier>darwin-x86_64</classifier>
+                <classifier>darwin_x86_64</classifier>
             </dependency>
             <dependency>
                 <groupId>net.bytebuddy</groupId>
