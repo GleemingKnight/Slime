@@ -1,13 +1,21 @@
 package me.hugmanrique.slime.core.data;
 
-import me.hugmanrique.slime.core.SlimeInputStream;
-import me.hugmanrique.slime.core.SlimeReaderUtil;
-import net.minecraft.server.v1_8_R3.*;
-
+import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+import me.hugmanrique.slime.core.SlimeInputStream;
+import me.hugmanrique.slime.core.SlimeReaderUtil;
+import net.minecraft.server.v1_8_R3.Chunk;
+import net.minecraft.server.v1_8_R3.ChunkCoordIntPair;
+import net.minecraft.server.v1_8_R3.ChunkSection;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.EntityTypes;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NibbleArray;
+import net.minecraft.server.v1_8_R3.TileEntity;
+import net.minecraft.server.v1_8_R3.World;
 
 /**
  * Represents a chunk that hasn't been loaded yet.
@@ -20,6 +28,7 @@ public class ProtoSlimeChunk {
     private static final int BLOCKS_LENGTH = 4096;
     private static final int BLOCK_DATA_LENGTH = 2048;
 
+    @VisibleForTesting
     public static boolean RECALC_BLOCK_COUNTS = true;
 
     public static ProtoSlimeChunk read(SlimeInputStream in, ChunkCoordIntPair coords) throws IOException {
