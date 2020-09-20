@@ -2,7 +2,7 @@
 
 Slime is a Minecraft world file format described by the [Hypixel](https://hypixel.net) developers on one of their [dev blogs](https://hypixel.net/threads/dev-blog-5-storing-your-skyblock-island.2190753/). This format was originally designed to store SkyBlock player islands. As so, the main focus of this format is small worlds, guaranteeing a higher compression rate, and using less disk space than Minecraft's default [Region file format](https://www.mojang.com/2011/02/minecraft-save-file-format-in-beta-1-3/).
 
-This projects provides a [CraftBukkit](https://www.spigotmc.org/) Slime chunk loader based on "in-memory" worlds, which don't use disk storage at all. This is extremely useful for minigame servers, where the maps tend to be small (they fit nicely in memory), and no world saving is needed.
+This project provides a [CraftBukkit](https://www.spigotmc.org/) Slime chunk loader based on "in-memory" worlds, which don't use disk storage at all. This is extremely useful for minigame servers, where the maps tend to be small (they fit nicely in memory), and no world saving is required.
 
 ## Getting started
 
