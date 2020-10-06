@@ -2,7 +2,7 @@ package me.hugmanrique.slime.core;
 
 import me.hugmanrique.slime.core.data.ProtoSlimeChunk;
 import me.hugmanrique.slime.core.data.SlimeFile;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,19 +81,17 @@ public class SlimeChunkLoader implements IChunkLoader {
         return chunk;
     }
 
-    @Override
-    public void a(World world, Chunk chunk) throws IOException, ExceptionWorldConflict {
-        // NOOP: saveChunk
+    public void saveChunk(World world, Chunk chunk, boolean b) {
+
+    }
+
+    public void c() {
+
     }
 
     @Override
-    public void b(World world, Chunk chunk) throws IOException {
-        // NOOP: writeChunkToNBT
-    }
-
-    @Override
-    public void a() {
-        // NOOP: chunkTick
+    public boolean chunkExists(int i, int i1) {
+        return false;
     }
 
     @Override

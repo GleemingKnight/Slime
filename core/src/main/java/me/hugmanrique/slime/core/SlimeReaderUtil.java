@@ -1,7 +1,7 @@
 package me.hugmanrique.slime.core;
 
-import net.minecraft.server.v1_8_R3.Block;
-import net.minecraft.server.v1_8_R3.NibbleArray;
+import net.minecraft.server.v1_12_R1.Block;
+import net.minecraft.server.v1_12_R1.NibbleArray;
 
 /**
  * Provides utilities to manage data in a Slime stream.
@@ -49,7 +49,7 @@ public final class SlimeReaderUtil {
     public static char getBlockId(int id, int blockData) {
         int packed = id << 4 | blockData;
 
-        if (Block.d.a(packed) == null) {
+        if (Block.REGISTRY_ID.fromId(packed) == null) {
             // Convert old block
             Block block = Block.getById(id);
 

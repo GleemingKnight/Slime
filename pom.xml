@@ -17,7 +17,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javac.target>1.8</javac.target>
-        <minecraft.version>1.8.8-R0.1-SNAPSHOT</minecraft.version>
         <zstd.version>1.4.4-7</zstd.version>
     </properties>
 
@@ -58,18 +57,6 @@
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy</artifactId>
                 <version>1.9.15</version>
-            </dependency>
-            <dependency>
-                <groupId>org.spigotmc</groupId>
-                <artifactId>spigot</artifactId>
-                <version>${minecraft.version}</version>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.spigotmc</groupId>
-                <artifactId>spigot-api</artifactId>
-                <version>${minecraft.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

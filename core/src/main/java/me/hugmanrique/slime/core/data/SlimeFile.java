@@ -2,9 +2,9 @@ package me.hugmanrique.slime.core.data;
 
 import com.google.common.collect.ImmutableSet;
 import me.hugmanrique.slime.core.SlimeInputStream;
-import net.minecraft.server.v1_8_R3.ChunkCoordIntPair;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
+import net.minecraft.server.v1_12_R1.ChunkCoordIntPair;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NBTTagList;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -168,8 +168,8 @@ public class SlimeFile {
             NBTTagCompound entityData = entities.get(i);
             NBTTagList position = entityData.getList("Pos", 6);
 
-            int x = (int) position.d(0);
-            int z = (int) position.d(2);
+            int x = position.d(0)[0];
+            int z = position.d(2)[0];
 
             ProtoSlimeChunk chunk = getProtoChunkAt(x, z);
 

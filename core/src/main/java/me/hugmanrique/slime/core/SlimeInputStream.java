@@ -1,9 +1,9 @@
 package me.hugmanrique.slime.core;
 
 import com.github.luben.zstd.Zstd;
-import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NibbleArray;
+import net.minecraft.server.v1_12_R1.NBTCompressedStreamTools;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
+import net.minecraft.server.v1_12_R1.NibbleArray;
 
 import java.io.*;
 import java.util.BitSet;
@@ -63,7 +63,7 @@ public class SlimeInputStream extends DataInputStream {
      * @throws IOException if the bytes cannot be read
      */
     public int readNibbleArray(NibbleArray nibbleArray) throws IOException {
-        return read(nibbleArray.a());
+        return read(nibbleArray.asBytes());
     }
 
     public BitSet readBitSet(final int byteCount) throws IOException {

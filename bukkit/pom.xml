@@ -39,12 +39,11 @@
             <version>1.9.15</version>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <groupId>org.paper</groupId>
+            <artifactId>paper</artifactId>
+            <version>1.12.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../libs/paper-1.12.2.jar</systemPath>
         </dependency>
     </dependencies>
 

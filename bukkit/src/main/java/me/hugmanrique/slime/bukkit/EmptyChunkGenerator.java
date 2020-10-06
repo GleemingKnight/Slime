@@ -1,11 +1,8 @@
 package me.hugmanrique.slime.bukkit;
 
-import net.minecraft.server.v1_8_R3.ServerNBTManager;
-import net.minecraft.server.v1_8_R3.WorldProvider;
-import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Random;

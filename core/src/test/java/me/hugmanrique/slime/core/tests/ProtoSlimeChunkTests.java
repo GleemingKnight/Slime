@@ -2,7 +2,7 @@ package me.hugmanrique.slime.core.tests;
 
 import me.hugmanrique.slime.core.data.ProtoSlimeChunk;
 import me.hugmanrique.slime.core.data.SlimeFile;
-import net.minecraft.server.v1_8_R3.ChunkSection;
+import net.minecraft.server.v1_12_R1.ChunkSection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

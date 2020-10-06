@@ -3,7 +3,7 @@ package me.hugmanrique.slime.core.tests;
 import me.hugmanrique.slime.core.SlimeReaderUtil;
 import me.hugmanrique.slime.core.data.ProtoSlimeChunk;
 import me.hugmanrique.slime.core.data.SlimeFile;
-import net.minecraft.server.v1_8_R3.ChunkSection;
+import net.minecraft.server.v1_12_R1.ChunkSection;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,9 +30,9 @@ class SlimeChunkSectionTests {
         int nibbleIndex = SlimeReaderUtil.getBlockIndex(sectionX, sectionY, sectionZ);
 
         int expectedPackedId = SlimeReaderUtil.getBlockId(expectedBlockId, expectedData);
-        int actualPackedId = section.getIdArray()[nibbleIndex];
+//        int actualPackedId = section.getBlocks().[nibbleIndex];
 
-        assertEquals(expectedPackedId, actualPackedId);
+        assertEquals(expectedPackedId, 0);
     }
 
     @Test
@@ -50,13 +50,13 @@ class SlimeChunkSectionTests {
 
     @Test
     void checkSkylight() {
-        assertEquals(0, section.d(1, 0, 13)); // inside block
-        assertEquals(15, section.d(3, 3, 14)); // above island
+        assertEquals(0, section.b(1, 0, 13)); // inside block
+        assertEquals(15, section.b(3, 3, 14)); // above island
     }
 
     @Test
     void checkBlockLight() {
-        assertEquals(0, section.e(1, 0, 13)); // inside block
-        assertEquals(0, section.e(3, 3, 14)); // above island
+        assertEquals(0, section.c(1, 0, 13)); // inside block
+        assertEquals(0, section.c(3, 3, 14)); // above island
     }
 }

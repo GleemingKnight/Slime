@@ -6,7 +6,7 @@ import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.dynamic.loading.ClassInjector.UsingInstrumentation.Target;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import net.bytebuddy.implementation.StubMethod;
-import net.minecraft.server.v1_8_R3.ServerNBTManager;
+import net.minecraft.server.v1_12_R1.ServerNBTManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;

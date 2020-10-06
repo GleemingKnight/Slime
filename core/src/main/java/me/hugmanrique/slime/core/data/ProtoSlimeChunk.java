@@ -5,17 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
+
 import me.hugmanrique.slime.core.SlimeInputStream;
 import me.hugmanrique.slime.core.SlimeReaderUtil;
-import net.minecraft.server.v1_8_R3.Chunk;
-import net.minecraft.server.v1_8_R3.ChunkCoordIntPair;
-import net.minecraft.server.v1_8_R3.ChunkSection;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.EntityTypes;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NibbleArray;
-import net.minecraft.server.v1_8_R3.TileEntity;
-import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_12_R1.*;
 
 /**
  * Represents a chunk that hasn't been loaded yet.
@@ -53,8 +46,9 @@ public class ProtoSlimeChunk {
             byte[] blocks = in.readByteArray(BLOCKS_LENGTH);
             NibbleArray data = in.readNibbleArray();
 
-            char[] blockIds = section.getIdArray();
-            SlimeReaderUtil.readBlockIds(blockIds, blocks, data);
+            //todo: this wasnt commented
+//            char[] blockIds = section.();
+//            SlimeReaderUtil.readBlockIds(blockIds, blocks, data);
 
             in.readNibbleArray(section.getSkyLightArray());
 
@@ -112,8 +106,8 @@ public class ProtoSlimeChunk {
      * @param chunk the chunk to add the entities to
      */
     private void loadEntities(World world, Chunk chunk) {
-        // Load entities
-        world.timings.syncChunkLoadEntitiesTimer.startTiming();
+        // Load entities todo: might not be right siad entities last time
+        world.timings.syncChunkLoadDataTimer.startTiming();
 
         if (entities != null) {
             for (NBTTagCompound compound : entities) {
@@ -136,21 +130,21 @@ public class ProtoSlimeChunk {
                     }
 
                     chunk.a(other);
-                    entity.mount(other);
+                    entity.startRiding(other);
 
                     entity = other;
                 }
             }
         }
 
-        world.timings.syncChunkLoadEntitiesTimer.stopTiming();
+        world.timings.syncChunkLoadDataTimer.stopTiming();
 
         // Load tile entities
-        world.timings.syncChunkLoadTileEntitiesTimer.startTiming();
+        world.timings.syncChunkLoadDataTimer.startTiming();
 
         if (tileEntities != null) {
             for (NBTTagCompound compound : tileEntities) {
-                TileEntity tileEntity = TileEntity.c(compound);
+                TileEntity tileEntity = TileEntity.create(world, compound);
 
                 if (tileEntity != null) {
                     chunk.a(tileEntity);
@@ -158,7 +152,7 @@ public class ProtoSlimeChunk {
             }
         }
 
-        world.timings.syncChunkLoadTileEntitiesTimer.stopTiming();
+        world.timings.syncChunkLoadDataTimer.stopTiming();
     }
 
     /**

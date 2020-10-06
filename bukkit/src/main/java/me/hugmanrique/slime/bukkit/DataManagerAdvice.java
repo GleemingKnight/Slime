@@ -2,7 +2,7 @@ package me.hugmanrique.slime.bukkit;
 
 import me.hugmanrique.slime.core.SlimeChunkLoader;
 import net.bytebuddy.asm.Advice;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Bukkit;
 
 import java.io.File;
@@ -46,6 +46,6 @@ public class DataManagerAdvice {
         }
 
         // Fallback to Anvil region loader
-        returned = new ChunkRegionLoader(worldDir);
+        returned = new ChunkRegionLoader(worldDir, null);
     }
 }
